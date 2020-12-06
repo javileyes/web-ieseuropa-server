@@ -5,7 +5,6 @@ import com.ieseuropa.spring.config.exception.NotFoundException
 import com.ieseuropa.spring.entity.Authority
 import com.ieseuropa.spring.entity.User
 import com.ieseuropa.spring.repository.UserRepository
-import com.ieseuropa.spring.repository.criteria.UserCriteria
 import com.ieseuropa.spring.service.tool.Constants
 import com.ieseuropa.spring.service.tool.EmailTool
 import com.ieseuropa.spring.service.tool.ProfileTool
@@ -21,7 +20,6 @@ import javax.transaction.Transactional
 class UserService {
 
     @Autowired lateinit var userRepository: UserRepository
-    @Autowired lateinit var userCriteria: UserCriteria
     @Autowired lateinit var authorityService: AuthorityService
     @Autowired lateinit var passwordEncoder: PasswordEncoder
     @Autowired lateinit var emailTool: EmailTool
