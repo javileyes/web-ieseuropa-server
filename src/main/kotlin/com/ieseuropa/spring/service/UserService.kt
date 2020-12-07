@@ -33,14 +33,10 @@ class UserService {
         if (userRepository.count() <= 0) {
             println("UserService init()")
 
-            register("superadmin@ieseuropa.com", password, "Superadmin", false)
             register("admin@ieseuropa.com", password, "Administrador", false)
-
-            authorityService.relateUser(Authority.Role.SUPER_ADMIN, 1)
-            authorityService.relateUser(Authority.Role.ADMIN, 2)
+            authorityService.relateUser(Authority.Role.ADMIN, 1)
 
             activate(1, false)
-            activate(2, false)
         }
     }
 
