@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.oauth2.common.OAuth2AccessToken
-import org.springframework.security.oauth2.common.exceptions.InvalidGrantException
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -30,9 +29,6 @@ class OAuthService {
 
     @Throws(HttpRequestMethodNotSupportedException::class)
     fun login(email: String, password: String): OAuth2AccessToken {
-        if (!userService.existsByEmailAndActiveTrue(email)) {
-            throw InvalidGrantException("Bad credentials")
-        }
         val accessToken: ResponseEntity<OAuth2AccessToken> = loginByEmailAndPassword(email, password)
         return accessToken.body!!
     }

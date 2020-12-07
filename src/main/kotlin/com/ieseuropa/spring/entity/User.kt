@@ -2,7 +2,6 @@ package com.ieseuropa.spring.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.ieseuropa.spring.entity.Authority
 import java.io.Serializable
 import javax.persistence.*
 
@@ -20,7 +19,6 @@ class User(
         var password: String? = null,
         var name: String? = null,
         var lastname: String? = null,
-        var active: Boolean? = null,
 
         @JsonIgnore
         @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)

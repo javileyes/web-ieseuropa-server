@@ -8,7 +8,6 @@ import com.ieseuropa.spring.repository.UserRepository
 import com.ieseuropa.spring.service.tool.Constants
 import com.ieseuropa.spring.service.tool.EmailTool
 import com.ieseuropa.spring.service.tool.ProfileTool
-import com.ieseuropa.spring.service.tool.StringTool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -35,8 +34,6 @@ class UserService {
 
             register("admin@ieseuropa.com", password, "Administrador", false)
             authorityService.relateUser(Authority.Role.ADMIN, 1)
-
-            activate(1, false)
         }
     }
 
@@ -54,8 +51,7 @@ class UserService {
         val user = User(
                 email = email,
                 password = passwordEncoder.encode(password),
-                name = name,
-                active = false
+                name = name
         )
 
         userRepository.save(user)
@@ -70,7 +66,6 @@ class UserService {
     fun update(id: Long, request: User): User {
         val user = findById(id)
         request.name?.let { user.name = it }
-        request.active?.let { user.active = it }
         request.email?.let {
             oAuthService.logoutByUserId(id)
             user.email = it
@@ -79,42 +74,11 @@ class UserService {
         return userRepository.save(user)
     }
 
-    fun activate(id: Long, sendEmail: Boolean = true): User {
-        val user = findById(id)
-        if (sendEmail) {
-            emailTool.send(user.email!!, "Usuario activado", EmailTool.Type.ACTIVATE, mapOf())
-        }
-        user.active = true
-        return userRepository.save(user)
-    }
-
-    fun deactivate(id: Long): User {
-        val user = findById(id)
-        emailTool.send(user.email!!, "Usuario desactivado", EmailTool.Type.DEACTIVATE, mapOf())
-        user.active = false
-        return userRepository.save(user)
-    }
-
-    fun existsById(id: Long): Boolean {
-        return userRepository.existsById(id)
-    }
-
-    fun existsByEmailAndActiveTrue(email: String): Boolean {
-        return userRepository.existsByEmailAndActiveTrue(email)
-    }
-
     fun findById(id: Long): User {
         if (!userRepository.existsById(id)) {
             throw NotFoundException()
         }
         return userRepository.getOne(id)
-    }
-
-    fun findAllById(ids: List<Long>): List<User> {
-        if (userRepository.countByIdIn(ids) != ids.size) {
-            throw NotFoundException()
-        }
-        return userRepository.findAllById(ids)
     }
 
     fun findByEmail(email: String): User {
@@ -133,27 +97,6 @@ class UserService {
             throw NotFoundException()
         }
         userRepository.deleteById(id)
-    }
-
-    fun generatePassword(id: Long) {
-        val user = findById(id)
-        val password = StringTool.generatePasswordString()
-        user.password = passwordEncoder.encode(password)
-        userRepository.save(user)
-
-        emailTool.send(user.email!!, "Nueva contraseña", EmailTool.Type.PASSWORD, mapOf("password" to password))
-    }
-
-    fun changePassword(id: Long, password: String, newPassword: String) {
-        val user = findById(id)
-        if (!passwordEncoder.matches(password, user.password)) {
-            throw BadRequestException()
-        }
-        if (newPassword.isBlank() || newPassword.length < Constants.PASSWORD_MIN_SIZE) {
-            throw BadRequestException()
-        }
-        user.password = passwordEncoder.encode(newPassword)
-        userRepository.save(user)
     }
 
 }

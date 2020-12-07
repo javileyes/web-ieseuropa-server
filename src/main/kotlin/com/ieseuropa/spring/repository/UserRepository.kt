@@ -11,8 +11,4 @@ interface UserRepository: JpaRepository<User, Long> {
 
     fun existsByEmail(email: String): Boolean
 
-    fun existsByEmailAndActiveTrue(email: String): Boolean
-
-    fun countByIdIn(ids: List<Long>): Int
-
 }

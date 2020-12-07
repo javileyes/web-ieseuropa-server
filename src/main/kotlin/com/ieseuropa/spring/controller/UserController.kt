@@ -17,9 +17,8 @@ class UserController {
     @Autowired lateinit var userService: UserService
 
 
-    @PostMapping("/public/users/register")
+    @PostMapping("/api/users/register")
     fun postRegister(
-            @RequestParam @Size(min = 10, max = 10) membership: String,
             @RequestParam @Email email: String,
             @RequestParam @Size(min = 4) password: String,
             @RequestParam @Size(min = 4) fullName: String
@@ -50,31 +49,6 @@ class UserController {
     @DeleteMapping("/api/users/{id}")
     fun deleteUser(@PathVariable id: Long): ResponseEntity<Void> {
         userService.delete(id)
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
-    }
-
-    @PatchMapping("/api/users/{id}/generate-password")
-    fun patchUserGeneratePassword(@PathVariable id: Long): ResponseEntity<Void> {
-        userService.generatePassword(id)
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
-    }
-
-    @PatchMapping("/api/users/{id}/change-password")
-    fun patchUserChangePassword(
-            @PathVariable id: Long,
-            @RequestParam password: String,
-            @RequestParam newPassword: String
-    ): ResponseEntity<Void> {
-        userService.changePassword(id, password, newPassword)
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
-    }
-
-    @PatchMapping("/api/users/{id}/activate")
-    fun patchUserActivate(
-            @PathVariable id: Long,
-            @RequestParam active: Boolean
-    ): ResponseEntity<Void> {
-        if (active) userService.activate(id) else userService.deactivate(id)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
     }
 
