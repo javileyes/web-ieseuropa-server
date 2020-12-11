@@ -32,7 +32,7 @@ class UserService {
         if (userRepository.count() <= 0) {
             println("UserService init()")
 
-            register("admin@ieseuropa.com", password, "Administrador", false)
+            register(username, password, "Administrador", false)
             authorityService.relateUser(Authority.Role.ADMIN, 1)
         }
     }
