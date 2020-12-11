@@ -22,23 +22,23 @@ class ResourceCategoryService {
         }
     }
 
-    fun create(name: String): ResourceCategory {
-        if (name.isBlank()) {
+    fun create(title: String): ResourceCategory {
+        if (title.isBlank()) {
             IllegalArgumentException()
         }
 
         var documentCategory = ResourceCategory()
-        documentCategory.category = name
+        documentCategory.title = title
 
         return resourceCategoryRepository.save(documentCategory)
     }
 
-    fun update(id: Long, name: String): ResourceCategory {
-        if (name.isBlank()) {
+    fun update(id: Long, title: String): ResourceCategory {
+        if (title.isBlank()) {
             IllegalArgumentException()
         }
         var documentCategory = findById(id)
-        documentCategory.category = name
+        documentCategory.title = title
         return resourceCategoryRepository.save(documentCategory)
     }
 

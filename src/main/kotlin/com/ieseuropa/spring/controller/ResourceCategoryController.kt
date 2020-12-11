@@ -14,13 +14,13 @@ class ResourceCategoryController {
 
 
     @PostMapping("/api/resource-category")
-    fun postDocumentCategory(@RequestParam name: String): ResponseEntity<ResourceCategory> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(resourceCategoryService.create(name))
+    fun postDocumentCategory(@RequestParam title: String): ResponseEntity<ResourceCategory> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(resourceCategoryService.create(title))
     }
 
     @PatchMapping("/api/resource-category/{id}")
-    fun patchDocumentCategory(@PathVariable id: Long, @RequestParam name: String): ResponseEntity<ResourceCategory> {
-        return ResponseEntity.status(HttpStatus.OK).body(resourceCategoryService.update(id, name))
+    fun patchDocumentCategory(@PathVariable id: Long, @RequestParam title: String): ResponseEntity<ResourceCategory> {
+        return ResponseEntity.status(HttpStatus.OK).body(resourceCategoryService.update(id, title))
     }
 
     @DeleteMapping("/api/resource-category/{id}")

@@ -12,12 +12,12 @@ server:
   port: 8080
 
 custom:
-  username: admin@ieseuropa.com
+  username: admin@ieseuropa.es
   password: 1234
   version: 1.0
   email-enabled: true
   my-secret-token: my-secret-token
   access-token-validity: 50000
   refresh-token-validity: 50000
-  base-url: api.ieseuropa.org
+  base-url: cassandra1.javiergimenez.es:8080
   protocol: https

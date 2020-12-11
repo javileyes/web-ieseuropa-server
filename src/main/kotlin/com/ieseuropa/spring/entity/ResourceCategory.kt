@@ -9,7 +9,7 @@ import javax.persistence.OneToMany
 class ResourceCategory(
         @Id @GeneratedValue
         var id: Long? = null,
-        var category: String? = null,
+        var title: String? = null,
         @OneToMany(mappedBy = "resourceCategory")
         var resources: List<Resource> = listOf()
 )
