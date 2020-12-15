@@ -17,13 +17,13 @@ class ResourceService {
     @Autowired lateinit var resourceCategoryService: ResourceCategoryService
     @Autowired lateinit var documentService: DocumentService
 
-    fun create(document: MultipartFile, title: String, resourceCategoryId: Long): Resource {
+    fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long): Resource {
         if (title.isBlank()) {
             IllegalArgumentException()
         }
 
         val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
-        val document = documentService.create(document, Document.Type.DOCUMENT, Resource::class.java.simpleName)
+        val document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName)
 
         val resource = Resource(
                 title = title,
@@ -34,7 +34,7 @@ class ResourceService {
         return resourceRepository.save(resource)
     }
 
-    fun update(id: Long, document: MultipartFile?, title: String?, resourceCategoryId: Long?): Resource {
+    fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?): Resource {
         if (!resourceRepository.existsById(id)) {
             NotFoundException()
         }
@@ -53,9 +53,9 @@ class ResourceService {
             resource.resourceCategory = resourceCategory
         }
 
-        if (document != null) {
+        if (documentFile != null) {
             val oldDocument = resource.document
-            resource.document = documentService.create(document, Document.Type.DOCUMENT, Resource::class.java.simpleName)
+            resource.document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName)
             oldDocument?.let { documentService.delete(it.id!!) }
         }
 

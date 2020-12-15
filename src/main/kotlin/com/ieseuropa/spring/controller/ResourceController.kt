@@ -16,20 +16,20 @@ class ResourceController {
 
     @PostMapping("/api/resource")
     fun postResource(
-            @RequestParam document: MultipartFile,
+            @RequestParam documentFile: MultipartFile,
             @RequestParam title: String,
             @RequestParam resourceCategoryId: Long
     ): ResponseEntity<Resource> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(resourceService.create(document, title, resourceCategoryId))
+        return ResponseEntity.status(HttpStatus.CREATED).body(resourceService.create(documentFile, title, resourceCategoryId))
     }
 
     @PatchMapping("/api/resource/{id}")
     fun patchResource(
             @PathVariable id: Long,
-            @RequestParam(required = false) document: MultipartFile?,
+            @RequestParam(required = false) documentFile: MultipartFile?,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) resourceCategoryId: Long?): ResponseEntity<Resource> {
-        return ResponseEntity.status(HttpStatus.OK).body(resourceService.update(id, document, title, resourceCategoryId))
+        return ResponseEntity.status(HttpStatus.OK).body(resourceService.update(id, documentFile, title, resourceCategoryId))
     }
 
     @DeleteMapping("/api/resource/{id}")

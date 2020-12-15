@@ -20,4 +20,4 @@ custom:
   access-token-validity: 50000
   refresh-token-validity: 50000
   base-url: cassandra1.javiergimenez.es:8080
-  protocol: https
+  protocol: http

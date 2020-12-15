@@ -12,5 +12,5 @@ class Resource(
         @ManyToOne
         var resourceCategory: ResourceCategory? = null,
         @OneToOne
-       var document: Document? = null
+        var document: Document? = null
 )
