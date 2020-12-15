@@ -15,13 +15,20 @@ class DepartmentContentController {
 
 
     @PostMapping("/api/department")
-    fun postDepartment(@RequestParam title: String, @RequestParam documentFile: MultipartFile): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(departmentContentService.create(title, documentFile))
+    fun postDepartment(
+            @RequestParam title: String,
+            @RequestParam imageFile: MultipartFile
+    ): ResponseEntity<DepartmentContent> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentContentService.create(title, imageFile))
     }
 
     @PatchMapping("/api/department/{id}")
-    fun pathDepartment(@PathVariable id: Long, @RequestParam title: String, @RequestParam documentFile: MultipartFile): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.update(id, title, documentFile))
+    fun pathDepartment(
+            @PathVariable id: Long,
+            @RequestParam(required = false) title: String?,
+            @RequestParam(required = false) imageFile: MultipartFile?
+    ): ResponseEntity<DepartmentContent> {
+        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.update(id, title, imageFile))
     }
 
     @DeleteMapping("/api/department/{id}")
@@ -30,12 +37,12 @@ class DepartmentContentController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
     }
 
-    @GetMapping("/api/department")
+    @GetMapping("/public/department")
     fun getDepartments(): ResponseEntity<List<DepartmentContent>> {
         return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.findAll())
     }
 
-    @GetMapping("/api/department/{id}")
+    @GetMapping("/public/department/{id}")
     fun getDepartment(@PathVariable id: Long): ResponseEntity<DepartmentContent> {
         return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.findById(id))
     }

@@ -17,28 +17,29 @@ class DepartmentContentService {
     @Autowired lateinit var documentService: DocumentService
 
 
-    fun create(title: String, documentFile: MultipartFile): DepartmentContent {
+    fun create(title: String, imageFile: MultipartFile): DepartmentContent {
         if (title.isBlank()) {
             IllegalArgumentException()
         }
 
-        val document = documentService.create(documentFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+        val image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
 
         val department = DepartmentContent(
                 title = title,
-                image = document
+                image = image
         )
 
         return departmentContentRepository.save(department)
     }
 
-    fun update(id: Long, title: String, documentFile: MultipartFile?): DepartmentContent {
+    fun update(id: Long, title: String?, imageFile: MultipartFile?): DepartmentContent {
         val department = findById(id)
-        department.title = title
 
-        if (documentFile != null) {
+        title?.let { department.title = it }
+
+        if (imageFile != null) {
             val oldImage = department.image
-            department.image = documentService.create(documentFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+            department.image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
             oldImage?.let { documentService.delete(it.id!!) }
         }
 
@@ -47,14 +48,14 @@ class DepartmentContentService {
 
     fun findById(id: Long): DepartmentContent {
         if (!departmentContentRepository.existsById(id)) {
-            NotFoundException()
+            throw NotFoundException()
         }
         return departmentContentRepository.getOne(id)
     }
 
     fun delete(id: Long) {
         if (!departmentContentRepository.existsById(id)) {
-            NotFoundException()
+            throw NotFoundException()
         }
         departmentContentRepository.deleteById(id)
     }

@@ -24,7 +24,7 @@ class ResourceCategoryService {
 
     fun create(title: String): ResourceCategory {
         if (title.isBlank()) {
-            IllegalArgumentException()
+            throw IllegalArgumentException()
         }
 
         var documentCategory = ResourceCategory()
@@ -35,7 +35,7 @@ class ResourceCategoryService {
 
     fun update(id: Long, title: String): ResourceCategory {
         if (title.isBlank()) {
-            IllegalArgumentException()
+            throw IllegalArgumentException()
         }
         var documentCategory = findById(id)
         documentCategory.title = title

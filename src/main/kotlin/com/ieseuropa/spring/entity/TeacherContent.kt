@@ -12,8 +12,8 @@ class TeacherContent(
         var fullName: String? = null,
         var email: String? = null,
         var position: String? = null,
-        var subject: String? = null,
-        var shedules: String? = null,
+        var subjects: String? = null,
+        var shedule: String? = null,
         @OneToOne
         var department: DepartmentContent? = null
 )

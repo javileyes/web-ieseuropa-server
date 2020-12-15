@@ -19,7 +19,7 @@ class ResourceService {
 
     fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long): Resource {
         if (title.isBlank()) {
-            IllegalArgumentException()
+            throw IllegalArgumentException()
         }
 
         val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
@@ -36,14 +36,14 @@ class ResourceService {
 
     fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?): Resource {
         if (!resourceRepository.existsById(id)) {
-            NotFoundException()
+            throw NotFoundException()
         }
 
         var resource = resourceRepository.getOne(id)
 
         title?.let {
             if (it.isBlank()) {
-                IllegalArgumentException()
+                throw IllegalArgumentException()
             }
             resource.title = it
         }
@@ -64,7 +64,7 @@ class ResourceService {
 
     fun delete(id: Long) {
         if (!resourceRepository.existsById(id)) {
-            NotFoundException()
+            throw NotFoundException()
         }
         resourceRepository.deleteById(id)
     }
