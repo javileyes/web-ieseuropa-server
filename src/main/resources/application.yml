@@ -60,7 +60,7 @@ server:
   port: 8080
 
 custom:
-  username: admin@ieseuropa.com
+  username: admin@ieseuropa.es
   password: 1234
   version: 1.0
   email-enabled: false

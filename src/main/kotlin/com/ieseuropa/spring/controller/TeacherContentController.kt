@@ -18,6 +18,7 @@ class TeacherContentController {
             @RequestBody teacher: TeacherContent,
             @RequestParam departmentId: Long
     ): ResponseEntity<TeacherContent> {
+        teacher.id = null
         return ResponseEntity.status(HttpStatus.CREATED).body(teacherContentService.create(teacher, departmentId))
     }
 
