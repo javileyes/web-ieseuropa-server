@@ -1,9 +1,10 @@
 package com.ieseuropa.spring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.ManyToOne
 
 @Entity
 class TeacherContent(
@@ -13,7 +14,8 @@ class TeacherContent(
         var email: String? = null,
         var position: String? = null,
         var subjects: String? = null,
-        var shedule: String? = null,
-        @OneToOne
+        var schedule: String? = null,
+        @JsonIgnore
+        @ManyToOne
         var department: DepartmentContent? = null
 )

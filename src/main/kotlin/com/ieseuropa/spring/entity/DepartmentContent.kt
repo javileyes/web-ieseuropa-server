@@ -1,9 +1,6 @@
 package com.ieseuropa.spring.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.*
 
 @Entity
 class DepartmentContent(
@@ -11,5 +8,7 @@ class DepartmentContent(
         var id: Long? = null,
         var title: String? = null,
         @OneToOne
-        var image: Document? = null
+        var image: Document? = null,
+        @OneToMany(mappedBy = "department")
+        var teachers: List<TeacherContent> = listOf()
 )

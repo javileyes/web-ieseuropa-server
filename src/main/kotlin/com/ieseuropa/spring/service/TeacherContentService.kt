@@ -35,7 +35,7 @@ class TeacherContentService {
         request.email?.let { teacherContent.email = it }
         request.position?.let { teacherContent.position = it }
         request.subjects?.let { teacherContent.subjects = it }
-        request.shedule?.let { teacherContent.shedule = it }
+        request.schedule?.let { teacherContent.schedule= it }
 
         return teacherContentRepository.save(teacherContent)
     }
