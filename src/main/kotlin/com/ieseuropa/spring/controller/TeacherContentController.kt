@@ -11,24 +11,22 @@ import org.springframework.web.bind.annotation.*
 class TeacherContentController {
 
     @Autowired lateinit var teacherContentService: TeacherContentService
-    @Autowired lateinit var departmentService: TeacherContentService
 
-    @PostMapping("/api/teacher")
+
+    @PostMapping("/api/department/{departmentId}/teacher")
     fun postTeacher(
-            @RequestBody teacher: TeacherContent,
-            @RequestParam departmentId: Long
+            @PathVariable departmentId: Long,
+            @RequestBody teacher: TeacherContent
     ): ResponseEntity<TeacherContent> {
-        teacher.id = null
         return ResponseEntity.status(HttpStatus.CREATED).body(teacherContentService.create(teacher, departmentId))
     }
 
     @PatchMapping("/api/teacher/{id}")
     fun pathTeacher(
             @PathVariable id: Long,
-            @RequestBody request: TeacherContent,
-            @RequestParam(required = false) departmentId: Long?
+            @RequestBody teacher: TeacherContent
     ): ResponseEntity<TeacherContent> {
-        return ResponseEntity.status(HttpStatus.OK).body(teacherContentService.update(id, request, departmentId))
+        return ResponseEntity.status(HttpStatus.OK).body(teacherContentService.update(id, teacher))
     }
 
     @DeleteMapping("/api/teacher/{id}")

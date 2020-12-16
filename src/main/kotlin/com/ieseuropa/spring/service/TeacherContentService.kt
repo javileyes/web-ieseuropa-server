@@ -15,16 +15,18 @@ class TeacherContentService {
     @Autowired lateinit var departmentContentService: DepartmentContentService
 
 
-    fun create(teacherContent: TeacherContent, departmentId: Long): TeacherContent {
+    fun create(teacher: TeacherContent, departmentId: Long): TeacherContent {
         val department = departmentContentService.findById(departmentId)
-        teacherContent.department = department
 
-        return teacherContentRepository.save(teacherContent)
+        teacher.id = null
+        teacher.department = department
+
+        return teacherContentRepository.save(teacher)
     }
 
-    fun update(id: Long, request: TeacherContent, departmentId: Long?): TeacherContent {
+    fun update(id: Long, request: TeacherContent): TeacherContent {
         if (teacherContentRepository.existsById(id)) {
-            NotFoundException()
+            throw NotFoundException()
         }
 
         val teacherContent = teacherContentRepository.getOne(id)
@@ -34,11 +36,6 @@ class TeacherContentService {
         request.position?.let { teacherContent.position = it }
         request.subjects?.let { teacherContent.subjects = it }
         request.shedule?.let { teacherContent.shedule = it }
-
-        departmentId?.let {
-            val department = departmentContentService.findById(it)
-            teacherContent.department = department
-        }
 
         return teacherContentRepository.save(teacherContent)
     }
