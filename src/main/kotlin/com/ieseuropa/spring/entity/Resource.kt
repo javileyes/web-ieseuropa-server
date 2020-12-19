@@ -11,6 +11,9 @@ class Resource(
         @JsonIgnore
         @ManyToOne
         var resourceCategory: ResourceCategory? = null,
+        @JsonIgnore
+        @ManyToOne
+        var department: DepartmentContent? = null,
         @OneToOne
         var document: Document? = null
 )

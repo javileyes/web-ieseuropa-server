@@ -15,26 +15,34 @@ class ResourceService {
 
     @Autowired lateinit var resourceRepository: ResourceRepository
     @Autowired lateinit var resourceCategoryService: ResourceCategoryService
+    @Autowired lateinit var departmentContentService: DepartmentContentService
     @Autowired lateinit var documentService: DocumentService
 
-    fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long): Resource {
-        if (title.isBlank()) {
-            throw IllegalArgumentException()
-        }
 
-        val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
+    fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long?, departmentId: Long?): Resource {
+        if (title.isBlank()) throw IllegalArgumentException()
+
         val document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName)
 
         val resource = Resource(
                 title = title,
-                resourceCategory = resourceCategory,
                 document = document
         )
+
+        resourceCategoryId?.let {
+            val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
+            resource.resourceCategory = resourceCategory
+        }
+
+        departmentId?.let {
+            val department = departmentContentService.findById(departmentId)
+            resource.department = department
+        }
 
         return resourceRepository.save(resource)
     }
 
-    fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?): Resource {
+    fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?, departmentId: Long?): Resource {
         if (!resourceRepository.existsById(id)) {
             throw NotFoundException()
         }
@@ -42,15 +50,18 @@ class ResourceService {
         var resource = resourceRepository.getOne(id)
 
         title?.let {
-            if (it.isBlank()) {
-                throw IllegalArgumentException()
-            }
+            if (it.isBlank()) throw IllegalArgumentException()
             resource.title = it
         }
 
         resourceCategoryId?.let {
             val resourceCategory = resourceCategoryService.findById(it)
             resource.resourceCategory = resourceCategory
+        }
+
+        departmentId?.let {
+            val department = departmentContentService.findById(departmentId)
+            resource.department = department
         }
 
         if (documentFile != null) {

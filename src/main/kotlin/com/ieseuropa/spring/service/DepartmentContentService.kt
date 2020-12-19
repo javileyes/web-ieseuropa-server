@@ -4,6 +4,7 @@ import com.ieseuropa.spring.config.exception.NotFoundException
 import com.ieseuropa.spring.entity.DepartmentContent
 import com.ieseuropa.spring.entity.Document
 import com.ieseuropa.spring.repository.DepartmentContentRepository
+import com.ieseuropa.spring.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -15,7 +16,19 @@ class DepartmentContentService {
 
     @Autowired lateinit var departmentContentRepository: DepartmentContentRepository
     @Autowired lateinit var documentService: DocumentService
+    @Autowired lateinit var mockTool: MockTool
+//    var departments: List<DepartmentContent> = listOf()
 
+
+    fun init() {
+        if (departmentContentRepository.count() <= 0) {
+            println("DepartmentContentService init()")
+            create("Filosofia", mockTool.multipartFileImage())
+            create("Historia", mockTool.multipartFileImage())
+            create("Matematica", mockTool.multipartFileImage())
+            create("Dibujo", mockTool.multipartFileImage())
+        }
+    }
 
     fun create(title: String, imageFile: MultipartFile): DepartmentContent {
         if (title.isBlank()) {

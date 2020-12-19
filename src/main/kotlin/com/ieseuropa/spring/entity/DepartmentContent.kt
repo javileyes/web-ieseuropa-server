@@ -10,5 +10,7 @@ class DepartmentContent(
         @OneToOne
         var image: Document? = null,
         @OneToMany(mappedBy = "department")
-        var teachers: List<TeacherContent> = listOf()
+        var teachers: List<TeacherContent> = listOf(),
+        @OneToMany(mappedBy = "department")
+        var resources: List<Resource> = listOf()
 )

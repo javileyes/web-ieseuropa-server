@@ -56,10 +56,6 @@ class UserService {
 
         userRepository.save(user)
 
-        if (sendEmail) {
-            emailTool.send(email, "Solicitud de registro", EmailTool.Type.REGISTER, mapOf())
-        }
-
         return user
     }
 

@@ -18,9 +18,12 @@ class ResourceController {
     fun postResource(
             @RequestParam documentFile: MultipartFile,
             @RequestParam title: String,
-            @RequestParam resourceCategoryId: Long
+            @RequestParam(required = false) resourceCategoryId: Long?,
+            @RequestParam(required = false) departmentId: Long?
     ): ResponseEntity<Resource> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(resourceService.create(documentFile, title, resourceCategoryId))
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                resourceService.create(documentFile, title, resourceCategoryId, departmentId)
+        )
     }
 
     @PatchMapping("/api/resource/{id}")
@@ -28,8 +31,12 @@ class ResourceController {
             @PathVariable id: Long,
             @RequestParam(required = false) documentFile: MultipartFile?,
             @RequestParam(required = false) title: String?,
-            @RequestParam(required = false) resourceCategoryId: Long?): ResponseEntity<Resource> {
-        return ResponseEntity.status(HttpStatus.OK).body(resourceService.update(id, documentFile, title, resourceCategoryId))
+            @RequestParam(required = false) resourceCategoryId: Long?,
+            @RequestParam(required = false) departmentId: Long?
+    ): ResponseEntity<Resource> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                resourceService.update(id, documentFile, title, resourceCategoryId, departmentId)
+        )
     }
 
     @DeleteMapping("/api/resource/{id}")

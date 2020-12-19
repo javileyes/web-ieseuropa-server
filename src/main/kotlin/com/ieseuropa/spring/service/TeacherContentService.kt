@@ -29,15 +29,15 @@ class TeacherContentService {
             throw NotFoundException()
         }
 
-        val teacherContent = teacherContentRepository.getOne(id)
+        val teacher = teacherContentRepository.getOne(id)
 
-        request.fullName?.let { teacherContent.fullName = it }
-        request.email?.let { teacherContent.email = it }
-        request.position?.let { teacherContent.position = it }
-        request.subjects?.let { teacherContent.subjects = it }
-        request.schedule?.let { teacherContent.schedule= it }
+        request.fullName?.let { teacher.fullName = it }
+        request.email?.let { teacher.email = it }
+        request.position?.let { teacher.position = it }
+        request.subjects?.let { teacher.subjects = it }
+        request.schedule?.let { teacher.schedule= it }
 
-        return teacherContentRepository.save(teacherContent)
+        return teacherContentRepository.save(teacher)
     }
 
     fun delete(id: Long) {
