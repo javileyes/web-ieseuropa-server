@@ -22,7 +22,7 @@ class BlogService {
 
     fun create(title: String, body: String): Blog {
         if (title.isBlank() && body.isBlank()) {
-            IllegalArgumentException()
+            throw IllegalArgumentException()
         }
 
         var blog = Blog(
@@ -37,11 +37,11 @@ class BlogService {
         val blog = findById(id)
 
         title?.let {
-            if (it.isBlank()) IllegalArgumentException()
+            if (it.isBlank()) throw IllegalArgumentException()
             blog.title = it
         }
         body?.let {
-            if (it.isBlank()) IllegalArgumentException()
+            if (it.isBlank()) throw IllegalArgumentException()
             blog.body = it
         }
 
