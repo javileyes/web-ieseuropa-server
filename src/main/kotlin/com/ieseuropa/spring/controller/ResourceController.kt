@@ -26,6 +26,17 @@ class ResourceController {
         )
     }
 
+    @PostMapping("/api/blog/{blogId}/resource")
+    fun postBlogResource(
+            @RequestParam imageFile: MultipartFile,
+            @RequestParam title: String,
+            @PathVariable blogId: Long
+    ): ResponseEntity<Resource> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                resourceService.createImage(imageFile, title, blogId)
+        )
+    }
+
     @PatchMapping("/api/resource/{id}")
     fun patchResource(
             @PathVariable id: Long,

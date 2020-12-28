@@ -16,6 +16,7 @@ class ResourceService {
     @Autowired lateinit var resourceRepository: ResourceRepository
     @Autowired lateinit var resourceCategoryService: ResourceCategoryService
     @Autowired lateinit var departmentContentService: DepartmentContentService
+    @Autowired lateinit var blogService: BlogService
     @Autowired lateinit var documentService: DocumentService
 
 
@@ -38,6 +39,22 @@ class ResourceService {
             val department = departmentContentService.findById(departmentId)
             resource.department = department
         }
+
+        return resourceRepository.save(resource)
+    }
+
+    fun createImage(imageFile: MultipartFile, title: String, blogId: Long): Resource {
+        if (title.isBlank()) throw IllegalArgumentException()
+
+        val image = documentService.create(imageFile, Document.Type.IMAGE, Resource::class.java.simpleName)
+
+        val blog = blogService.findById(blogId)
+
+        val resource = Resource(
+                title = title,
+                document = image,
+                blog = blog
+        )
 
         return resourceRepository.save(resource)
     }
