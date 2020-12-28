@@ -17,18 +17,20 @@ class DepartmentContentController {
     @PostMapping("/api/department")
     fun postDepartment(
             @RequestParam title: String,
-            @RequestParam imageFile: MultipartFile
+            @RequestParam imageFile: MultipartFile,
+            @RequestParam(required = false) bannerFile: MultipartFile?
     ): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(departmentContentService.create(title, imageFile))
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentContentService.create(title, imageFile, bannerFile))
     }
 
     @PatchMapping("/api/department/{id}")
     fun pathDepartment(
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
-            @RequestParam(required = false) imageFile: MultipartFile?
+            @RequestParam(required = false) imageFile: MultipartFile?,
+            @RequestParam(required = false) bannerFile: MultipartFile?
     ): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.update(id, title, imageFile))
+        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.update(id, title, imageFile, bannerFile))
     }
 
     @DeleteMapping("/api/department/{id}")

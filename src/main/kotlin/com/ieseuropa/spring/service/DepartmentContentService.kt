@@ -23,29 +23,35 @@ class DepartmentContentService {
     fun init() {
         if (departmentContentRepository.count() <= 0) {
             println("DepartmentContentService init()")
-            create("Filosofia", mockTool.multipartFileImage())
-            create("Historia", mockTool.multipartFileImage())
-            create("Matematica", mockTool.multipartFileImage())
-            create("Dibujo", mockTool.multipartFileImage())
+            create("Filosofia", mockTool.multipartFileImage(), null)
+            create("Historia", mockTool.multipartFileImage(), null)
+            create("Matematica", mockTool.multipartFileImage(), null)
+            create("Dibujo", mockTool.multipartFileImage(), null)
         }
     }
 
-    fun create(title: String, imageFile: MultipartFile): DepartmentContent {
+    fun create(title: String, imageFile: MultipartFile, bannerFile: MultipartFile?): DepartmentContent {
         if (title.isBlank()) {
             IllegalArgumentException()
         }
 
         val image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
 
+        var banner: Document? = null
+        bannerFile?.let {
+            banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+        }
+
         val department = DepartmentContent(
                 title = title,
-                image = image
+                image = image,
+                banner = banner
         )
 
         return departmentContentRepository.save(department)
     }
 
-    fun update(id: Long, title: String?, imageFile: MultipartFile?): DepartmentContent {
+    fun update(id: Long, title: String?, imageFile: MultipartFile?, bannerFile: MultipartFile?): DepartmentContent {
         val department = findById(id)
 
         title?.let { department.title = it }
@@ -54,6 +60,12 @@ class DepartmentContentService {
             val oldImage = department.image
             department.image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
             oldImage?.let { documentService.delete(it.id!!) }
+        }
+
+        if (bannerFile != null) {
+            val oldBanner = department.banner
+            department.banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+            oldBanner?.let { documentService.delete(it.id!!) }
         }
 
         return departmentContentRepository.save(department)
