@@ -1,0 +1,8 @@
+{
+    "projectPackage": "com.ieseuropa.spring",
+    "path": "src/main/kotlin/com/ieseuropa/spring/",
+    "entityFolder": "entity",
+    "repositoryFolder": "repository",
+    "serviceFolder": "service",
+    "controllerFolder": "controller"
+}
