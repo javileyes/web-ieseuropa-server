@@ -75,15 +75,17 @@ class DepartmentContentService {
         return departmentContentRepository.save(department)
     }
 
-    fun addDocument(id: Long, title: String, document: MultipartFile): DepartmentContent {
+    fun addDocument(id: Long, title: String, documentFile: MultipartFile): DepartmentContent {
         val department = findById(id)
-        department.documents.add(documentService.create(document, Document.Type.DOCUMENT, DepartmentContent::class.java.simpleName, title))
+        department.documents.add(
+                documentService.create(documentFile, Document.Type.DOCUMENT, DepartmentContent::class.java.simpleName, title)
+        )
         return departmentContentRepository.save(department)
     }
 
     fun removeDocument(id: Long, documentId: Long): DepartmentContent {
         val department = findById(id)
-        val document = documentService.findById(id)
+        val document = documentService.findById(documentId)
         department.documents.remove(document)
         documentService.delete(documentId)
         return departmentContentRepository.save(department)

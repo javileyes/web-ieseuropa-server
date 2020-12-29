@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 class BlogController {
@@ -30,6 +31,22 @@ class BlogController {
             @RequestParam(required = false) body: String?
     ): ResponseEntity<Blog> {
         return ResponseEntity.status(HttpStatus.OK).body(blogService.update(id, title, body, labelId))
+    }
+
+    @PostMapping("/api/blog/{id}/image")
+    fun postBlogImage(
+            @PathVariable id: Long,
+            @RequestParam imageFile: MultipartFile
+    ): ResponseEntity<Blog> {
+        return ResponseEntity.status(HttpStatus.OK).body(blogService.addImage(id, imageFile))
+    }
+
+    @DeleteMapping("/api/blog/{id}/image/{imageId}")
+    fun deleteBlogImage(
+            @PathVariable id: Long,
+            @PathVariable imageId: Long
+    ): ResponseEntity<Blog> {
+        return ResponseEntity.status(HttpStatus.OK).body(blogService.removeImage(id, imageId))
     }
 
     @DeleteMapping("/api/blog/{id}")

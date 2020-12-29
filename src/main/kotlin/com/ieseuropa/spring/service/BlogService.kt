@@ -2,9 +2,12 @@ package com.ieseuropa.spring.service
 
 import com.ieseuropa.spring.config.exception.NotFoundException
 import com.ieseuropa.spring.entity.Blog
+import com.ieseuropa.spring.entity.DepartmentContent
+import com.ieseuropa.spring.entity.Document
 import com.ieseuropa.spring.repository.BlogRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import javax.transaction.Transactional
 
 @Service
@@ -13,6 +16,7 @@ class BlogService {
 
     @Autowired lateinit var blogRepository: BlogRepository
     @Autowired lateinit var blogLabelService: BlogLabelService
+    @Autowired lateinit var documentService: DocumentService
 
 
     fun init() {
@@ -53,6 +57,22 @@ class BlogService {
             blog.label = label
         }
 
+        return blogRepository.save(blog)
+    }
+
+    fun addImage(id: Long, imageFile: MultipartFile): Blog {
+        val blog = findById(id)
+        blog.images.add(
+                documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName, null)
+        )
+        return blogRepository.save(blog)
+    }
+
+    fun removeImage(id: Long, imageId: Long): Blog {
+        val blog = findById(id)
+        val document = documentService.findById(imageId)
+        blog.images.remove(document)
+        documentService.delete(imageId)
         return blogRepository.save(blog)
     }
 

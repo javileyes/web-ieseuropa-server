@@ -41,9 +41,9 @@ class DepartmentContentController {
     fun postDepartmentDocument(
             @PathVariable id: Long,
             @RequestParam title: String,
-            @RequestParam document: MultipartFile
+            @RequestParam documentFile: MultipartFile
     ): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.addDocument(id, title, document))
+        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.addDocument(id, title, documentFile))
     }
 
     @DeleteMapping("/api/department/{id}/document/{documentId}")
