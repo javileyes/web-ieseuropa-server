@@ -13,6 +13,10 @@ class DepartmentContent(
         var banner: Document? = null,
         @OneToMany(mappedBy = "department")
         var teachers: List<TeacherContent> = listOf(),
-        @OneToMany(mappedBy = "department")
-        var resources: List<Resource> = listOf()
+        @OneToMany
+        @JoinTable(
+                name = "rel_department_document",
+                joinColumns = [JoinColumn(name = "department_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "document_id", referencedColumnName = "id")])
+        var documents: MutableList<Document> = mutableListOf()
 )

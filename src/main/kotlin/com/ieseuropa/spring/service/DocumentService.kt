@@ -26,7 +26,7 @@ class DocumentService {
     @Autowired lateinit var documentRepository: DocumentRepository
 
 
-    fun create(multipartFile: MultipartFile, type: Document.Type, tag: String): Document {
+    fun create(multipartFile: MultipartFile, type: Document.Type, tag: String, description: String?): Document {
         val originalFilename = StringUtils.cleanPath(multipartFile.originalFilename!!)
         val baseName = FilenameUtils.getBaseName(originalFilename)
         val extension = FilenameUtils.getExtension(originalFilename)
@@ -38,7 +38,7 @@ class DocumentService {
         val ext = if (!extension.isNullOrBlank()) ".$extension" else ""
         val millis = System.currentTimeMillis()
         document.name = "${document.id}D$millis$ext"
-        document.description = ""
+        document.description = description
         document.tag = tag
         document.type = type
         val folder = getFolderFromType(type)

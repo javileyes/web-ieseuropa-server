@@ -20,46 +20,23 @@ class ResourceService {
     @Autowired lateinit var documentService: DocumentService
 
 
-    fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long?, departmentId: Long?): Resource {
+    fun create(documentFile: MultipartFile, title: String, resourceCategoryId: Long): Resource {
         if (title.isBlank()) throw IllegalArgumentException()
 
-        val document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName)
+        val document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName, null)
 
         val resource = Resource(
                 title = title,
                 document = document
         )
 
-        resourceCategoryId?.let {
-            val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
-            resource.resourceCategory = resourceCategory
-        }
-
-        departmentId?.let {
-            val department = departmentContentService.findById(departmentId)
-            resource.department = department
-        }
+        val resourceCategory = resourceCategoryService.findById(resourceCategoryId)
+        resource.resourceCategory = resourceCategory
 
         return resourceRepository.save(resource)
     }
 
-    fun createImage(imageFile: MultipartFile, title: String, blogId: Long): Resource {
-        if (title.isBlank()) throw IllegalArgumentException()
-
-        val image = documentService.create(imageFile, Document.Type.IMAGE, Resource::class.java.simpleName)
-
-        val blog = blogService.findById(blogId)
-
-        val resource = Resource(
-                title = title,
-                document = image,
-                blog = blog
-        )
-
-        return resourceRepository.save(resource)
-    }
-
-    fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?, departmentId: Long?): Resource {
+    fun update(id: Long, documentFile: MultipartFile?, title: String?, resourceCategoryId: Long?): Resource {
         if (!resourceRepository.existsById(id)) {
             throw NotFoundException()
         }
@@ -76,14 +53,9 @@ class ResourceService {
             resource.resourceCategory = resourceCategory
         }
 
-        departmentId?.let {
-            val department = departmentContentService.findById(departmentId)
-            resource.department = department
-        }
-
         if (documentFile != null) {
             val oldDocument = resource.document
-            resource.document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName)
+            resource.document = documentService.create(documentFile, Document.Type.DOCUMENT, Resource::class.java.simpleName, null)
             oldDocument?.let { documentService.delete(it.id!!) }
         }
 
@@ -94,6 +66,8 @@ class ResourceService {
         if (!resourceRepository.existsById(id)) {
             throw NotFoundException()
         }
+        var resource = resourceRepository.getOne(id)
+        resource.document?.let { documentService.delete(it.id!!) }
         resourceRepository.deleteById(id)
     }
 

@@ -29,7 +29,7 @@ class BlogLabelService {
             throw IllegalArgumentException()
         }
 
-        val image = documentService.create(imageFile, Document.Type.IMAGE, Resource::class.java.simpleName)
+        val image = documentService.create(imageFile, Document.Type.IMAGE, Resource::class.java.simpleName, title)
 
         val blogLabel = BlogLabel(
                 title = title,
@@ -50,6 +50,8 @@ class BlogLabelService {
         if (!blogLabelRepository.existsById(id)) {
             throw NotFoundException()
         }
+        val label = findById(id)
+        label.image?.let { documentService.delete(it.id!!) }
         blogLabelRepository.deleteById(id)
     }
 

@@ -17,7 +17,6 @@ class DepartmentContentService {
     @Autowired lateinit var departmentContentRepository: DepartmentContentRepository
     @Autowired lateinit var documentService: DocumentService
     @Autowired lateinit var mockTool: MockTool
-//    var departments: List<DepartmentContent> = listOf()
 
 
     fun init() {
@@ -35,11 +34,16 @@ class DepartmentContentService {
             IllegalArgumentException()
         }
 
-        val image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+        val image = documentService.create(
+                multipartFile = imageFile,
+                type = Document.Type.IMAGE,
+                tag = DepartmentContent::class.java.simpleName,
+                description = null
+        )
 
         var banner: Document? = null
         bannerFile?.let {
-            banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+            banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName, null)
         }
 
         val department = DepartmentContent(
@@ -58,16 +62,30 @@ class DepartmentContentService {
 
         if (imageFile != null) {
             val oldImage = department.image
-            department.image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+            department.image = documentService.create(imageFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName, null)
             oldImage?.let { documentService.delete(it.id!!) }
         }
 
         if (bannerFile != null) {
             val oldBanner = department.banner
-            department.banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName)
+            department.banner = documentService.create(bannerFile, Document.Type.IMAGE, DepartmentContent::class.java.simpleName, null)
             oldBanner?.let { documentService.delete(it.id!!) }
         }
 
+        return departmentContentRepository.save(department)
+    }
+
+    fun addDocument(id: Long, title: String, document: MultipartFile): DepartmentContent {
+        val department = findById(id)
+        department.documents.add(documentService.create(document, Document.Type.DOCUMENT, DepartmentContent::class.java.simpleName, title))
+        return departmentContentRepository.save(department)
+    }
+
+    fun removeDocument(id: Long, documentId: Long): DepartmentContent {
+        val department = findById(id)
+        val document = documentService.findById(id)
+        department.documents.remove(document)
+        documentService.delete(documentId)
         return departmentContentRepository.save(department)
     }
 
@@ -82,6 +100,9 @@ class DepartmentContentService {
         if (!departmentContentRepository.existsById(id)) {
             throw NotFoundException()
         }
+        val department = findById(id)
+        department.image?.let { documentService.delete(it.id!!) }
+        department.banner?.let { documentService.delete(it.id!!) }
         departmentContentRepository.deleteById(id)
     }
 

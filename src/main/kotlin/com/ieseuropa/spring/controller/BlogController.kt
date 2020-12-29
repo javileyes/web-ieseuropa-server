@@ -13,21 +13,23 @@ class BlogController {
     @Autowired lateinit var blogService: BlogService
 
 
-    @PostMapping("/api/blog")
+    @PostMapping("/api/blog-label/{labelId}/blog")
     fun postBlog(
+            @PathVariable labelId: Long,
             @RequestParam title: String,
             @RequestParam body: String
     ): ResponseEntity<Blog> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(blogService.create(title, body))
+        return ResponseEntity.status(HttpStatus.CREATED).body(blogService.create(title, body, labelId))
     }
 
-    @PatchMapping("/api/blog/{id}")
+    @PatchMapping("/api/blog-label/{labelId}/blog/{id}")
     fun pathBlog(
             @PathVariable id: Long,
+            @PathVariable labelId: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?
     ): ResponseEntity<Blog> {
-        return ResponseEntity.status(HttpStatus.OK).body(blogService.update(id, title, body))
+        return ResponseEntity.status(HttpStatus.OK).body(blogService.update(id, title, body, labelId))
     }
 
     @DeleteMapping("/api/blog/{id}")

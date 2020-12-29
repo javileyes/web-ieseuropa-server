@@ -18,35 +18,22 @@ class ResourceController {
     fun postResource(
             @RequestParam documentFile: MultipartFile,
             @RequestParam title: String,
-            @RequestParam(required = false) resourceCategoryId: Long?,
-            @RequestParam(required = false) departmentId: Long?
+            @RequestParam resourceCategoryId: Long
     ): ResponseEntity<Resource> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                resourceService.create(documentFile, title, resourceCategoryId, departmentId)
+                resourceService.create(documentFile, title, resourceCategoryId)
         )
     }
 
-    @PostMapping("/api/blog/{blogId}/resource")
-    fun postBlogResource(
-            @RequestParam imageFile: MultipartFile,
-            @RequestParam title: String,
-            @PathVariable blogId: Long
-    ): ResponseEntity<Resource> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                resourceService.createImage(imageFile, title, blogId)
-        )
-    }
-
-    @PatchMapping("/api/resource/{id}")
+    @PatchMapping("/api/resource-category/{resourceCategoryId}/resource/{id}")
     fun patchResource(
             @PathVariable id: Long,
+            @PathVariable resourceCategoryId: Long,
             @RequestParam(required = false) documentFile: MultipartFile?,
-            @RequestParam(required = false) title: String?,
-            @RequestParam(required = false) resourceCategoryId: Long?,
-            @RequestParam(required = false) departmentId: Long?
+            @RequestParam(required = false) title: String?
     ): ResponseEntity<Resource> {
         return ResponseEntity.status(HttpStatus.OK).body(
-                resourceService.update(id, documentFile, title, resourceCategoryId, departmentId)
+                resourceService.update(id, documentFile, title, resourceCategoryId)
         )
     }
 

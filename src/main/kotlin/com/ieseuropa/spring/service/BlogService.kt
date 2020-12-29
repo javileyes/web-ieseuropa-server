@@ -12,6 +12,7 @@ import javax.transaction.Transactional
 class BlogService {
 
     @Autowired lateinit var blogRepository: BlogRepository
+    @Autowired lateinit var blogLabelService: BlogLabelService
 
 
     fun init() {
@@ -20,20 +21,23 @@ class BlogService {
         }
     }
 
-    fun create(title: String, body: String): Blog {
+    fun create(title: String, body: String, labelId: Long): Blog {
         if (title.isBlank() && body.isBlank()) {
             throw IllegalArgumentException()
         }
 
-        var blog = Blog(
+        val label = blogLabelService.findById(labelId)
+
+        val blog = Blog(
                 title = title,
-                body = body
+                body = body,
+                label = label
         )
 
         return blogRepository.save(blog)
     }
 
-    fun update(id: Long, title: String?, body: String?): Blog {
+    fun update(id: Long, title: String?, body: String?, labelId: Long?): Blog {
         val blog = findById(id)
 
         title?.let {
@@ -43,6 +47,10 @@ class BlogService {
         body?.let {
             if (it.isBlank()) throw IllegalArgumentException()
             blog.body = it
+        }
+        labelId?.let {
+            val label = blogLabelService.findById(it)
+            blog.label = label
         }
 
         return blogRepository.save(blog)

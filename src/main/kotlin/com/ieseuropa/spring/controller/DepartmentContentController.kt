@@ -20,7 +20,9 @@ class DepartmentContentController {
             @RequestParam imageFile: MultipartFile,
             @RequestParam(required = false) bannerFile: MultipartFile?
     ): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(departmentContentService.create(title, imageFile, bannerFile))
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                departmentContentService.create(title, imageFile, bannerFile)
+        )
     }
 
     @PatchMapping("/api/department/{id}")
@@ -30,7 +32,28 @@ class DepartmentContentController {
             @RequestParam(required = false) imageFile: MultipartFile?,
             @RequestParam(required = false) bannerFile: MultipartFile?
     ): ResponseEntity<DepartmentContent> {
-        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.update(id, title, imageFile, bannerFile))
+        return ResponseEntity.status(HttpStatus.OK).body(
+                departmentContentService.update(id, title, imageFile, bannerFile)
+        )
+    }
+
+    @PostMapping("/api/department/{id}/document")
+    fun postDepartmentDocument(
+            @PathVariable id: Long,
+            @RequestParam title: String,
+            @RequestParam document: MultipartFile
+    ): ResponseEntity<DepartmentContent> {
+        return ResponseEntity.status(HttpStatus.OK).body(departmentContentService.addDocument(id, title, document))
+    }
+
+    @DeleteMapping("/api/department/{id}/document/{documentId}")
+    fun deleteDepartmentDocument(
+            @PathVariable id: Long,
+            @PathVariable documentId: Long
+    ): ResponseEntity<DepartmentContent> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                departmentContentService.removeDocument(id, documentId)
+        )
     }
 
     @DeleteMapping("/api/department/{id}")

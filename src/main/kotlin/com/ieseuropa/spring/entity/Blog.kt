@@ -1,9 +1,6 @@
 package com.ieseuropa.spring.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 class Blog(
@@ -11,6 +8,13 @@ class Blog(
         var id: Long? = null,
         var title: String? = null,
         var body: String? = null,
-        @OneToMany(mappedBy = "blog")
-        var resources: List<Resource> = listOf()
+        @ManyToOne
+        var label: BlogLabel? = null,
+        @OneToMany
+        @JoinTable(
+                name = "rel_blog_document",
+                joinColumns = [JoinColumn(name = "blog_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "image_id", referencedColumnName = "id")]
+        )
+        var images: MutableList<Document> = mutableListOf()
 )
