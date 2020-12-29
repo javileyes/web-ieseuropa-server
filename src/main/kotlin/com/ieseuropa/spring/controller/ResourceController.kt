@@ -14,11 +14,11 @@ class ResourceController {
     @Autowired lateinit var resourceService: ResourceService
 
 
-    @PostMapping("/api/resource")
+    @PostMapping("/api/resource-category/{resourceCategoryId}/resource")
     fun postResource(
+            @PathVariable resourceCategoryId: Long,
             @RequestParam documentFile: MultipartFile,
-            @RequestParam title: String,
-            @RequestParam resourceCategoryId: Long
+            @RequestParam title: String
     ): ResponseEntity<Resource> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 resourceService.create(documentFile, title, resourceCategoryId)
