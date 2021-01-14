@@ -19,5 +19,5 @@ custom:
   my-secret-token: my-secret-token
   access-token-validity: 50000
   refresh-token-validity: 50000
-  base-url: cassandra1.javiergimenez.es:8080
+  base-url: api.javiergimenez.es
   protocol: http
