@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 docker stop ieseuropa
-docker rm ieseuropa
+docker rm -f ieseuropa
 docker rmi ieseuropa
 
 cd /root/ieseuropa/project
