@@ -23,7 +23,7 @@ class SliderService {
         }
     }
 
-    fun create(title: String, imageFile: MultipartFile): Slider {
+    fun create(title: String, url: String?, imageFile: MultipartFile): Slider {
 
         val image = documentService.create(imageFile, Document.Type.IMAGE, Slider::class.java.simpleName, title)
 
@@ -31,6 +31,8 @@ class SliderService {
                 title = title,
                 image = image
         )
+
+        url?.let { slider.url = it }
 
         return sliderRepository.save(slider)
     }

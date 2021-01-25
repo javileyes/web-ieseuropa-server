@@ -10,6 +10,7 @@ class Slider(
         @Id @GeneratedValue
         var id: Long? = null,
         var title: String? = null,
+        var url: String? = null,
         @OneToOne
         var image: Document? = null
 )
