@@ -2,6 +2,7 @@ package com.ieseuropa.spring.controller
 
 import com.ieseuropa.spring.entity.Blog
 import com.ieseuropa.spring.service.BlogService
+import com.ieseuropa.spring.service.tool.Constants
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -56,8 +57,15 @@ class BlogController {
     }
 
     @GetMapping("/public/blog")
-    fun getBlogs(): ResponseEntity<List<Blog>> {
-        return ResponseEntity.status(HttpStatus.OK).body(blogService.findAll())
+    fun getBlogs(
+            @RequestParam(required = false) search: String?,
+            @RequestParam page: Int,
+            @RequestParam size: Int
+    ): ResponseEntity<List<Blog>> {
+        val result = blogService.findFilterPageable(page, size, search)
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.X_TOTAL_COUNT_HEADER, result.totalElements.toString())
+                .body(result.content)
     }
 
     @GetMapping("/public/blog/{id}")

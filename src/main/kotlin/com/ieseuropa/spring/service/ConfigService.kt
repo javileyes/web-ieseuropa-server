@@ -45,9 +45,6 @@ class ConfigService {
     }
 
     fun findAllByKey(key: String): List<Config> {
-        if (!configRepository.existsByKey(key)) {
-            throw NotFoundException()
-        }
         return configRepository.findByKey(key)
     }
 

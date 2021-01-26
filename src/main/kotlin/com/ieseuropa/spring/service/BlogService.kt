@@ -5,7 +5,9 @@ import com.ieseuropa.spring.entity.Blog
 import com.ieseuropa.spring.entity.DepartmentContent
 import com.ieseuropa.spring.entity.Document
 import com.ieseuropa.spring.repository.BlogRepository
+import com.ieseuropa.spring.repository.criteria.BlogCriteria
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import javax.transaction.Transactional
@@ -17,6 +19,7 @@ class BlogService {
     @Autowired lateinit var blogRepository: BlogRepository
     @Autowired lateinit var blogLabelService: BlogLabelService
     @Autowired lateinit var documentService: DocumentService
+    @Autowired lateinit var blogCriteria: BlogCriteria
 
 
     fun init() {
@@ -83,6 +86,10 @@ class BlogService {
         return blogRepository.getOne(id)
     }
 
+    fun findFilterPageable(page: Int, size: Int, search: String?): Page<Blog> {
+        return blogCriteria.findFilterPageable(page, size, search)
+    }
+
     fun delete(id: Long) {
         if (!blogRepository.existsById(id)) {
             throw NotFoundException()
@@ -90,7 +97,4 @@ class BlogService {
         blogRepository.deleteById(id)
     }
 
-    fun findAll(): List<Blog> {
-        return blogRepository.findAll()
-    }
 }
