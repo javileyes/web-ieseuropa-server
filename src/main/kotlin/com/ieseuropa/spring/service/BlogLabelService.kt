@@ -5,6 +5,7 @@ import com.ieseuropa.spring.entity.BlogLabel
 import com.ieseuropa.spring.entity.Document
 import com.ieseuropa.spring.entity.Resource
 import com.ieseuropa.spring.repository.BlogLabelRepository
+import com.ieseuropa.spring.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -16,11 +17,13 @@ class BlogLabelService {
 
     @Autowired lateinit var blogLabelRepository: BlogLabelRepository
     @Autowired lateinit var documentService: DocumentService
+    @Autowired lateinit var mockTool: MockTool
 
 
     fun init() {
         if (blogLabelRepository.count() <= 0) {
-            TODO("IMPLEMENT THIS")
+            create("example1", mockTool.multipartFileImage())
+            create("example2", mockTool.multipartFileImage())
         }
     }
 

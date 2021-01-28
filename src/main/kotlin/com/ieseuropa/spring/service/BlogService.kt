@@ -24,7 +24,8 @@ class BlogService {
 
     fun init() {
         if (blogRepository.count() <= 0) {
-            TODO("IMPLEMENT THIS")
+            create("Hola1", "lorem", 1)
+            create("Hola2", "lorem", 2)
         }
     }
 

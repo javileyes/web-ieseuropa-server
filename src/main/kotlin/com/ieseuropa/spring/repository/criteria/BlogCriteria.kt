@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
+import javax.persistence.criteria.Path
 
 @Repository
 class BlogCriteria {
@@ -17,7 +18,8 @@ class BlogCriteria {
         val cb = entityManager.criteriaBuilder
         val q = cb.createQuery(Blog::class.java)
         val blog = q.from(Blog::class.java)
-        q.select(blog).where()
+        val label: Path<Set<String>> = blog.get("label_id")
+        q.select(blog).where(cb.equal(label, 2))
         return CriteriaTool.page(entityManager, q, page, size)
     }
 }
