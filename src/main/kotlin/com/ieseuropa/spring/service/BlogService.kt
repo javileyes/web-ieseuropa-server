@@ -87,8 +87,8 @@ class BlogService {
         return blogRepository.getOne(id)
     }
 
-    fun findFilterPageable(page: Int, size: Int, search: String?): Page<Blog> {
-        return blogCriteria.findFilterPageable(page, size, search)
+    fun findFilterPageable(page: Int, size: Int, search: String?, labelId: Long?): Page<Blog> {
+        return blogCriteria.findFilterPageable(page, size, search, labelId)
     }
 
     fun delete(id: Long) {

@@ -60,9 +60,10 @@ class BlogController {
     fun getBlogs(
             @RequestParam(required = false) search: String?,
             @RequestParam page: Int,
-            @RequestParam size: Int
+            @RequestParam size: Int,
+            @RequestParam(required = false) labelId: Long?
     ): ResponseEntity<List<Blog>> {
-        val result = blogService.findFilterPageable(page, size, search)
+        val result = blogService.findFilterPageable(page, size, search, labelId)
         return ResponseEntity.status(HttpStatus.OK)
                 .header(Constants.X_TOTAL_COUNT_HEADER, result.totalElements.toString())
                 .body(result.content)
