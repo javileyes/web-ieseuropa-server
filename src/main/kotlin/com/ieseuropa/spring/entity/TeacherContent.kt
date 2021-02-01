@@ -17,5 +17,6 @@ class TeacherContent(
         var schedule: String? = null,
         @JsonIgnore
         @ManyToOne
-        var department: DepartmentContent? = null
+        var department: DepartmentContent? = null,
+        var location: Int? = null
 )

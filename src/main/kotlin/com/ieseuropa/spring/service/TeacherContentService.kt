@@ -15,10 +15,47 @@ class TeacherContentService {
     @Autowired lateinit var departmentContentService: DepartmentContentService
 
 
+    fun init() {
+        if (teacherContentRepository.count() <= 0) {
+            println("TeacherContentService init()")
+            create(
+                    TeacherContent(
+                            fullName = "Silvio Franco",
+                            email = "silviofrancoxa8@gmail.com",
+                            position = "Jefe de departamento",
+                            subjects = "Filosofia",
+                            schedule = "de 10AM a 1PM",
+                            location = 2
+                    ), 1
+            )
+            create(
+                    TeacherContent(
+                            fullName = "Celmy Guzman",
+                            email = "celmy@gmail.com",
+                            position = "Profesora",
+                            subjects = "Filosofia",
+                            schedule = "de 10AM a 1PM"
+
+                    ), 1
+            )
+            create(
+                    TeacherContent(
+                            fullName = "Jose Bozo",
+                            email = "jose@gmail.com",
+                            position = "Director",
+                            subjects = "Filosofia",
+                            schedule = "de 10AM a 1PM",
+                            location = 1
+                    ), 1
+            )
+        }
+    }
+
     fun create(teacher: TeacherContent, departmentId: Long): TeacherContent {
         val department = departmentContentService.findById(departmentId)
 
         teacher.id = null
+        if (teacher.location == null) teacher.location = 1000
         teacher.department = department
 
         return teacherContentRepository.save(teacher)
@@ -31,11 +68,17 @@ class TeacherContentService {
 
         val teacher = teacherContentRepository.getOne(id)
 
+
         request.fullName?.let { teacher.fullName = it }
         request.email?.let { teacher.email = it }
         request.position?.let { teacher.position = it }
         request.subjects?.let { teacher.subjects = it }
-        request.schedule?.let { teacher.schedule= it }
+        request.schedule?.let { teacher.schedule = it }
+        request.location?.let {
+            teacher.location = it
+        } ?: run {
+            teacher.location = 1000
+        }
 
         return teacherContentRepository.save(teacher)
     }
@@ -48,6 +91,6 @@ class TeacherContentService {
     }
 
     fun findAll(): List<TeacherContent> {
-        return teacherContentRepository.findAll()
+        return teacherContentRepository.findByOrderByLocationAsc()
     }
 }

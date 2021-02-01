@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ConfigRepository : JpaRepository<Config, Long> {
 
-    fun existsByKey(key: String): Boolean
-
-    fun findByKey(key: String): List<Config>
+    fun findByKeyOrderByLocationAsc(key: String): List<Config>
 
 }

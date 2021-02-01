@@ -12,5 +12,6 @@ class Config(
         var value: String? = null,
         var url: String? = null,
         var meta: String? = null,
-        var tag: String? = null
+        var tag: String? = null,
+        var location: Int? = null
 )

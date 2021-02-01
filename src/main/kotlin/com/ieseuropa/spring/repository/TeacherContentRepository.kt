@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TeacherContentRepository : JpaRepository<TeacherContent, Long> {
+
+    fun findByOrderByLocationAsc(): List<TeacherContent>
+
 }

@@ -22,6 +22,7 @@ class ConfigService {
 
     fun create(config: Config): Config {
         config.id = null
+        if (config.location == null) config.location = 1000
         return configRepository.save(config)
     }
 
@@ -33,6 +34,11 @@ class ConfigService {
         request.url?.let { config.url = it }
         request.meta?.let { config.meta = it }
         request.tag?.let { config.tag = it }
+        request.location?.let {
+            config.location = it
+        } ?: run {
+            config.location = 1000
+        }
 
         return configRepository.save(config)
     }
@@ -45,7 +51,7 @@ class ConfigService {
     }
 
     fun findAllByKey(key: String): List<Config> {
-        return configRepository.findByKey(key)
+        return configRepository.findByKeyOrderByLocationAsc(key)
     }
 
     fun delete(id: Long) {

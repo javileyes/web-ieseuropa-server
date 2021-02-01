@@ -12,14 +12,18 @@ class PopulateConfig {
     @Autowired lateinit var resourceCategoryService: ResourceCategoryService
     @Autowired lateinit var blogLabelService: BlogLabelService
     @Autowired lateinit var blogService: BlogService
+    @Autowired lateinit var departmentContentService: DepartmentContentService
+    @Autowired lateinit var teacherContentService: TeacherContentService
 
 
     fun init() {
         authorityService.init()
         userService.init()
-        resourceCategoryService.init()
-        blogLabelService.init()
-        blogService.init()
+//        resourceCategoryService.init()
+//        blogLabelService.init()
+//        blogService.init()
+//        departmentContentService.init()
+//        teacherContentService.init()
     }
 
 }
