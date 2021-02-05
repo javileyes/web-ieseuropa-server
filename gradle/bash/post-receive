@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 rm -rf /root/ieseuropa/project
 git clone -b master /root/ieseuropa/git /root/ieseuropa/project
-bash -x /root/ieseuropa/project/gradle/bash/deploy.sh
 bash -x /root/ieseuropa/project/gradle/bash/install.sh
+bash -x /root/ieseuropa/project/gradle/bash/deploy.sh
