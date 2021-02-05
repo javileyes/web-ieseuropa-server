@@ -11,6 +11,7 @@ class DepartmentContent(
         var image: Document? = null,
         @OneToOne
         var banner: Document? = null,
+        @OrderBy("location ASC")
         @OneToMany(mappedBy = "department")
         var teachers: List<TeacherContent> = listOf(),
         @OneToMany

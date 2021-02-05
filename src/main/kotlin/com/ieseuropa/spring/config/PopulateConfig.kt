@@ -22,8 +22,8 @@ class PopulateConfig {
 //        resourceCategoryService.init()
 //        blogLabelService.init()
 //        blogService.init()
-//        departmentContentService.init()
-//        teacherContentService.init()
+        departmentContentService.init()
+        teacherContentService.init()
     }
 
 }
