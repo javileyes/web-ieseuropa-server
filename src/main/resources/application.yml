@@ -23,18 +23,18 @@ spring:
     multipart:
       max-file-size: 256MB
       max-request-size: 256MB
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: noreply@gmail.com
-    password: 1234
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: noreply@gmail.com
+#    password: 1234
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
   flyway:
     enabled: false # si se usa H2 (o la base de datos está vacía) hay que poner el enabled a false, por que la bbdd es nueva
     locations: classpath:/config/flyway

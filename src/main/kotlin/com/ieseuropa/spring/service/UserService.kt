@@ -21,7 +21,6 @@ class UserService {
     @Autowired lateinit var userRepository: UserRepository
     @Autowired lateinit var authorityService: AuthorityService
     @Autowired lateinit var passwordEncoder: PasswordEncoder
-    @Autowired lateinit var emailTool: EmailTool
     @Autowired lateinit var profileTool: ProfileTool
     @Autowired lateinit var oAuthService: OAuthService
     @Value("\${custom.username}") lateinit var username: String

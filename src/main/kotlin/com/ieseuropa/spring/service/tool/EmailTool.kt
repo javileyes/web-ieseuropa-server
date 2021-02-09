@@ -3,20 +3,16 @@ package com.ieseuropa.spring.service.tool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ResourceLoader
-import org.springframework.mail.javamail.JavaMailSender
-import org.springframework.mail.javamail.MimeMessageHelper
-import org.springframework.mail.javamail.MimeMessagePreparator
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine
-import org.thymeleaf.context.Context
 import java.io.File
 import java.util.regex.Pattern
 
-@Component
+//@Component
 class EmailTool {
 
-    @Autowired lateinit var javaMailSender: JavaMailSender
+//    @Autowired lateinit var javaMailSender: JavaMailSender
     @Autowired lateinit var resourceLoader: ResourceLoader
     @Autowired lateinit var templateEngine: TemplateEngine
     @Value("\${spring.mail.username}") lateinit var from: String
@@ -58,28 +54,28 @@ class EmailTool {
     }
 
     private fun send(email: String, subject: String, file: File?, body: String?, type: Type?, params: Map<String, String>?) {
-        val messagePreparator = MimeMessagePreparator { mimeMessage ->
-            val messageHelper = MimeMessageHelper(mimeMessage, file != null)
-            messageHelper.setFrom(from)
-            messageHelper.setTo(email)
-            messageHelper.setSubject(subject)
-            if (type == null) {
-                messageHelper.setText(body!!)
-            } else {
-                val context = Context()
-                for (key in params!!.keys) context.setVariable(key, params[key])
-                val process = templateEngine.process(BASE + type.toString().toLowerCase(), context)
-                messageHelper.setText(process, true)
-            }
-            if (file != null) {
-                messageHelper.addAttachment(file.name, file)
-            }
-        }
-        if (emailEnabled) {
-            javaMailSender.send(messagePreparator)
-        }
-        println("Sent email to: $email - $subject")
-//        LogService.out.info("Email to: $email - $subject - $body")
+//        val messagePreparator = MimeMessagePreparator { mimeMessage ->
+//            val messageHelper = MimeMessageHelper(mimeMessage, file != null)
+//            messageHelper.setFrom(from)
+//            messageHelper.setTo(email)
+//            messageHelper.setSubject(subject)
+//            if (type == null) {
+//                messageHelper.setText(body!!)
+//            } else {
+//                val context = Context()
+//                for (key in params!!.keys) context.setVariable(key, params[key])
+//                val process = templateEngine.process(BASE + type.toString().toLowerCase(), context)
+//                messageHelper.setText(process, true)
+//            }
+//            if (file != null) {
+//                messageHelper.addAttachment(file.name, file)
+//            }
+//        }
+//        if (emailEnabled) {
+//            javaMailSender.send(messagePreparator)
+//        }
+//        println("Sent email to: $email - $subject")
+////        LogService.out.info("Email to: $email - $subject - $body")
     }
 
 
