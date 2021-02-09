@@ -21,4 +21,4 @@ custom:
   access-token-validity: 50000
   refresh-token-validity: 50000
   base-url: api.javiergimenez.es
-  protocol: http
+  protocol: https
