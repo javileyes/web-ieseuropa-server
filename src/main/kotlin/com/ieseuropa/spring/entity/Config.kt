@@ -1,5 +1,6 @@
 package com.ieseuropa.spring.entity
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -8,6 +9,7 @@ import javax.persistence.Id
 class Config(
         @Id @GeneratedValue
         var id: Long? = null,
+        @Column(name = "key_")
         var key: String? = null,
         var value: String? = null,
         var url: String? = null,

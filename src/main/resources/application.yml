@@ -4,9 +4,9 @@ spring:
   profiles:
     active:
   datasource:
-    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MySQL;IGNORECASE=TRUE;
-    #        url: jdbc:mysql://localhost:3310/ieseuropadb
-    #        password: 1234
+#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MySQL;IGNORECASE=TRUE;
+    url: jdbc:mysql://localhost:3306/ieseuropadb
+    password: 1234
     username: root
   h2:
     console:
