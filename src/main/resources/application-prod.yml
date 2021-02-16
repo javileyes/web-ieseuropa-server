@@ -14,11 +14,11 @@ server:
 
 custom:
   username: admin@ieseuropa.es
-  password: 1234
+  password: silosenovengo
   version: 1.0
   email-enabled: true
   my-secret-token: my-secret-token
   access-token-validity: 50000
   refresh-token-validity: 50000
-  base-url: api.javiergimenez.es
+  base-url: api.ieseuropa.es
   protocol: https

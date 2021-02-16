@@ -10,7 +10,7 @@ task buildDocker(dependsOn: 'build') {
 
         exec {
             commandLine 'docker', 'run', '-d',
-                    '--name', 'ieseuropa',
+                    '--name', 'ieseuropaapi',
                     '--network', 'ieseuropa',
                     '-p', '8080:8080',
                     '-v', pathStorage,
