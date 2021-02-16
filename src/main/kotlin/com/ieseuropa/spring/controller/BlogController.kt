@@ -27,7 +27,7 @@ class BlogController {
     @PatchMapping("/api/blog-label/{labelId}/blog/{id}")
     fun pathBlog(
             @PathVariable id: Long,
-            @PathVariable labelId: Long,
+            @PathVariable(required = false) labelId: Long?,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?
     ): ResponseEntity<Blog> {
