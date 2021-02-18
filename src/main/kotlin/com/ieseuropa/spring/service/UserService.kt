@@ -69,6 +69,18 @@ class UserService {
         return userRepository.save(user)
     }
 
+    fun changePassword(id: Long, password: String, newPassword: String) {
+        val user = findById(id)
+        if (!passwordEncoder.matches(password, user.password)) {
+            throw BadRequestException()
+        }
+        if (newPassword.isBlank() || newPassword.length < Constants.PASSWORD_MIN_SIZE) {
+            throw BadRequestException()
+        }
+        user.password = passwordEncoder.encode(newPassword)
+        userRepository.save(user)
+    }
+
     fun findById(id: Long): User {
         if (!userRepository.existsById(id)) {
             throw NotFoundException()

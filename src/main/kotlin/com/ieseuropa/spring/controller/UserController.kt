@@ -36,6 +36,16 @@ class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(id, user))
     }
 
+    @PatchMapping("/api/users/{id}/change-password")
+    fun patchUserChangePassword(
+            @PathVariable id: Long,
+            @RequestParam password: String,
+            @RequestParam newPassword: String
+    ): ResponseEntity<Void> {
+        userService.changePassword(id, password, newPassword)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
+    }
+
     @GetMapping("/api/users")
     fun getUsers(): ResponseEntity<List<User>> {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll())
