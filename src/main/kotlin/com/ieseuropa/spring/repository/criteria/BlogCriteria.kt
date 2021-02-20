@@ -24,10 +24,12 @@ class BlogCriteria {
         val b: Path<Set<String>> = blog.get(Blog_.LABEL)
         val label: Path<Set<String>> = b.get(BlogLabel_.ID)
 
+        val order: Path<Set<String>> = blog.get(Blog_.ID)
+
         labelId?.let {
-            q.select(blog).where(cb.equal(label, labelId))
+            q.select(blog).where(cb.equal(label, labelId)).orderBy(cb.desc(order))
         } ?: run {
-            q.select(blog).where()
+            q.select(blog).where().orderBy(cb.desc(order))
         }
 
         return CriteriaTool.page(entityManager, q, page, size)
