@@ -36,7 +36,7 @@ class FamilyController {
         return ResponseEntity.status(HttpStatus.OK).body(familyService.update(id, title, body, bannerFile, url))
     }
 
-    @PostMapping("/api/blog/{id}/image")
+    @PostMapping("/api/family/{id}/image")
     fun postFamilyImage(
             @PathVariable id: Long,
             @RequestParam imageFile: MultipartFile
@@ -44,7 +44,7 @@ class FamilyController {
         return ResponseEntity.status(HttpStatus.OK).body(familyService.addImage(id, imageFile))
     }
 
-    @DeleteMapping("/api/blog/{id}/image/{imageId}")
+    @DeleteMapping("/api/family/{id}/image/{imageId}")
     fun deleteFamilyImage(
             @PathVariable id: Long,
             @PathVariable imageId: Long

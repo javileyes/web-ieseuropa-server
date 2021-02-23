@@ -100,6 +100,8 @@ class FamilyService {
         if (!familyRepository.existsById(id)) {
             throw NotFoundException()
         }
+        val family = findById(id)
+        family.banner?.let { documentService.delete(it.id!!) }
         familyRepository.deleteById(id)
     }
 
