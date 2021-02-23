@@ -22,7 +22,7 @@ class TeacherContentController {
     }
 
     @PatchMapping("/api/teacher/{id}")
-    fun pathTeacher(
+    fun patchTeacher(
             @PathVariable id: Long,
             @RequestBody teacher: TeacherContent
     ): ResponseEntity<TeacherContent> {

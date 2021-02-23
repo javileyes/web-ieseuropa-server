@@ -19,4 +19,4 @@ abstract class Auditing(
         @LastModifiedDate
         var updatedAt: LocalDate? = null
 
-) : Serializable
+): Serializable
