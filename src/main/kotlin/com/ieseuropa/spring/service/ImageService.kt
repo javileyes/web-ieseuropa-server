@@ -38,7 +38,7 @@ class ImageService {
     }
 
     fun findByKey(key: String): List<Image> {
-        return imageRepository.findByKey(key)
+        return imageRepository.findByKeyOrderByIdDesc(key)
     }
 
     fun findById(id: Long): Image {
@@ -58,6 +58,6 @@ class ImageService {
     }
 
     fun findAll(): List<Image> {
-        return imageRepository.findAll()
+        return imageRepository.findAllByOrderByIdDesc()
     }
 }

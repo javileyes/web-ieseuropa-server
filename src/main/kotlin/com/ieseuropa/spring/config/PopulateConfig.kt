@@ -22,14 +22,14 @@ class PopulateConfig {
     fun init() {
         authorityService.init()
         userService.init()
-//        resourceCategoryService.init()
-//        blogLabelService.init()
-//        blogService.init()
-//        departmentContentService.init()
-//        teacherContentService.init()
-//        familyService.init()
-//        projectService.init()
-//        imageService.init()
+        resourceCategoryService.init()
+        blogLabelService.init()
+        blogService.init()
+        departmentContentService.init()
+        teacherContentService.init()
+        familyService.init()
+        projectService.init()
+        imageService.init()
 
     }
 

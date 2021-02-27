@@ -106,6 +106,6 @@ class FamilyService {
     }
 
     fun findAll(): List<Family> {
-        return familyRepository.findAll()
+        return familyRepository.findAllByOrderByIdDesc()
     }
 }

@@ -89,6 +89,6 @@ class ProjectService {
     }
 
     fun findAll(): List<Project> {
-        return projectRepository.findAll()
+        return projectRepository.findAllByOrderByIdDesc()
     }
 }

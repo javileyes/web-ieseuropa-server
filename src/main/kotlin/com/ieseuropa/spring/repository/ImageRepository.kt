@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ImageRepository : JpaRepository<Image, Long> {
 
-    fun findByKey(key: String): List<Image>
+    fun findByKeyOrderByIdDesc(key: String): List<Image>
+
+    fun findAllByOrderByIdDesc(): List<Image>
 
 }
