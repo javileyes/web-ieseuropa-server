@@ -21,7 +21,7 @@ class ConfigController {
     }
 
     @PatchMapping("/api/config/{id}")
-    fun pathConfig(
+    fun patchConfig(
             @PathVariable id: Long,
             @RequestBody request: Config
     ): ResponseEntity<Config> {

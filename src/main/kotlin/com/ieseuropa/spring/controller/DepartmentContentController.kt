@@ -26,7 +26,7 @@ class DepartmentContentController {
     }
 
     @PatchMapping("/api/department/{id}")
-    fun pathDepartment(
+    fun patchDepartment(
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) imageFile: MultipartFile?,

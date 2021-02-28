@@ -25,7 +25,7 @@ class BlogController {
     }
 
     @PatchMapping("/api/blog-label/{labelId}/blog/{id}")
-    fun pathBlog(
+    fun patchBlog(
             @PathVariable id: Long,
             @PathVariable(required = false) labelId: Long?,
             @RequestParam(required = false) title: String?,
