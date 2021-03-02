@@ -23,7 +23,7 @@ class SliderService {
         }
     }
 
-    fun create(title: String, url: String?, imageFile: MultipartFile): Slider {
+    fun create(title: String, url: String?, imageFile: MultipartFile, location: Int?): Slider {
 
         val image = documentService.create(imageFile, Document.Type.IMAGE, Slider::class.java.simpleName, title)
 
@@ -33,6 +33,11 @@ class SliderService {
         )
 
         url?.let { slider.url = it }
+        location?.let {
+            slider.location = it
+        } ?: run {
+            slider.location = 1000
+        }
 
         return sliderRepository.save(slider)
     }
@@ -54,6 +59,6 @@ class SliderService {
     }
 
     fun findAll(): List<Slider> {
-        return sliderRepository.findAll()
+        return sliderRepository.findByOrderByLocationAsc()
     }
 }
