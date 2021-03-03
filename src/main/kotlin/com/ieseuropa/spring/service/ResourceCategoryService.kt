@@ -15,7 +15,7 @@ class ResourceCategoryService {
 
 
     fun init() {
-        if (resourceCategoryRepository.count() <= 0) {
+        if (resourceCategoryRepository.count() == 0L) {
             create("Category1")
             create("Category2")
             create("Category3")
@@ -27,7 +27,7 @@ class ResourceCategoryService {
             throw IllegalArgumentException()
         }
 
-        var documentCategory = ResourceCategory()
+        val documentCategory = ResourceCategory()
         documentCategory.title = title
 
         return resourceCategoryRepository.save(documentCategory)
@@ -37,7 +37,7 @@ class ResourceCategoryService {
         if (title.isBlank()) {
             throw IllegalArgumentException()
         }
-        var documentCategory = findById(id)
+        val documentCategory = findById(id)
         documentCategory.title = title
         return resourceCategoryRepository.save(documentCategory)
     }

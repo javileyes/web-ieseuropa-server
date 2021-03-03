@@ -20,7 +20,7 @@ class ImageService {
 
 
     fun init() {
-        if (imageRepository.count() <= 0) {
+        if (imageRepository.count() == 0L) {
             create("Prueba1", "llave", mockTool.multipartFileImage())
             create("Prueba2", "llave", mockTool.multipartFileImage())
             create("Prueba3", "llave2", mockTool.multipartFileImage())

@@ -19,7 +19,7 @@ class FamilyService {
 
 
     fun init() {
-        if (familyRepository.count() <= 0) {
+        if (familyRepository.count() == 0L) {
             create("Prueba1", "lorem", mockTool.multipartFileImage(), null)
             create("Prueba2", null, null, "https://www.youtube.com/watch?v=YuZ6g77623I")
         }

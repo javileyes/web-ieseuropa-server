@@ -16,7 +16,7 @@ class AuthorityService {
 
 
     fun init() {
-        if (authorityRepository.count() <= 0) {
+        if (authorityRepository.count() == 0L) {
             println("AuthorityService init()")
             for (role in Authority.Role.values()) {
                 val authority = Authority()

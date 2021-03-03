@@ -21,7 +21,7 @@ class BlogLabelService {
 
 
     fun init() {
-        if (blogLabelRepository.count() <= 0) {
+        if (blogLabelRepository.count() == 0L) {
             create("example1", mockTool.multipartFileImage())
             create("example2", mockTool.multipartFileImage())
         }

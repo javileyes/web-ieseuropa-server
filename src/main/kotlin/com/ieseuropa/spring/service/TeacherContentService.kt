@@ -16,7 +16,7 @@ class TeacherContentService {
 
 
     fun init() {
-        if (teacherContentRepository.count() <= 0) {
+        if (teacherContentRepository.count() == 0L) {
             println("TeacherContentService init()")
             create(
                     TeacherContent(

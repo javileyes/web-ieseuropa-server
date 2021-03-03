@@ -15,7 +15,7 @@ class ConfigService {
 
 
     fun init() {
-        if (configRepository.count() <= 0) {
+        if (configRepository.count() == 0L) {
             TODO("IMPLEMENT THIS")
         }
     }
