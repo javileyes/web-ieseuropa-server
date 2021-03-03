@@ -14,23 +14,23 @@ class ResourceCategoryController {
 
 
     @PostMapping("/api/resource-category")
-    fun postDocumentCategory(@RequestParam title: String): ResponseEntity<ResourceCategory> {
+    fun postResourceCategory(@RequestParam title: String): ResponseEntity<ResourceCategory> {
         return ResponseEntity.status(HttpStatus.CREATED).body(resourceCategoryService.create(title))
     }
 
     @PatchMapping("/api/resource-category/{id}")
-    fun patchDocumentCategory(@PathVariable id: Long, @RequestParam title: String): ResponseEntity<ResourceCategory> {
+    fun patchResourceCategory(@PathVariable id: Long, @RequestParam title: String): ResponseEntity<ResourceCategory> {
         return ResponseEntity.status(HttpStatus.OK).body(resourceCategoryService.update(id, title))
     }
 
     @DeleteMapping("/api/resource-category/{id}")
-    fun deleteDocumentCategory(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deleteResourceCategory(@PathVariable id: Long): ResponseEntity<Void> {
         resourceCategoryService.delete(id)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
     }
 
     @GetMapping("/public/resource-category")
-    fun getDocumentService(): ResponseEntity<List<ResourceCategory>> {
+    fun getResourceCategory(): ResponseEntity<List<ResourceCategory>> {
         return ResponseEntity.status(HttpStatus.OK).body(resourceCategoryService.findAll())
     }
 }
