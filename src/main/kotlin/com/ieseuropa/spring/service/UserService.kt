@@ -28,7 +28,7 @@ class UserService {
 
 
     fun init() {
-        if (userRepository.count() <= 0) {
+        if (userRepository.count() == 0L) {
             println("UserService init()")
 
             register(username, password, "Administrador", false)

@@ -20,7 +20,7 @@ class ProjectService {
 
 
     fun init() {
-        if (projectRepository.count() <= 0) {
+        if (projectRepository.count() == 0L) {
             create("Prueba1", "lorem", mockTool.multipartFileImage())
             create("Prueba2", "lorem", mockTool.multipartFileImage())
         }

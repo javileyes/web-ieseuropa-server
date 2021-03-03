@@ -23,7 +23,7 @@ class BlogService {
 
 
     fun init() {
-        if (blogRepository.count() <= 0) {
+        if (blogRepository.count() == 0L) {
             create("Hola1", "lorem", 1)
             create("Hola2", "lorem", 2)
         }

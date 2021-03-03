@@ -18,7 +18,7 @@ class SliderService {
 
 
     fun init() {
-        if (sliderRepository.count() <= 0) {
+        if (sliderRepository.count() == 0L) {
             TODO("IMPLEMENT THIS")
         }
     }

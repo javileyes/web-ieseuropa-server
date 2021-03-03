@@ -20,7 +20,7 @@ class DepartmentContentService {
 
 
     fun init() {
-        if (departmentContentRepository.count() <= 0) {
+        if (departmentContentRepository.count() == 0L) {
             println("DepartmentContentService init()")
             create("Filosofia", mockTool.multipartFileImage(), null)
             create("Historia", mockTool.multipartFileImage(), null)
@@ -31,7 +31,7 @@ class DepartmentContentService {
 
     fun create(title: String, imageFile: MultipartFile, bannerFile: MultipartFile?): DepartmentContent {
         if (title.isBlank()) {
-            IllegalArgumentException()
+            throw IllegalArgumentException()
         }
 
         val image = documentService.create(
@@ -109,6 +109,6 @@ class DepartmentContentService {
     }
 
     fun findAll(): List<DepartmentContent> {
-        return departmentContentRepository.findAll()
+        return departmentContentRepository.findByOrderByTitleAsc()
     }
 }
