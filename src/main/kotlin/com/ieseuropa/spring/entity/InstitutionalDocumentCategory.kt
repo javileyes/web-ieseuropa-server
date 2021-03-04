@@ -8,5 +8,5 @@ class InstitutionalDocumentCategory(
         var id: Long? = null,
         var title: String? = null,
         @OneToMany(mappedBy = "institutionalDocumentCategory")
-        var institutionalDocument: List<InstitutionalDocument> = listOf()
+        var institutionalDocuments: List<InstitutionalDocument> = listOf()
 )

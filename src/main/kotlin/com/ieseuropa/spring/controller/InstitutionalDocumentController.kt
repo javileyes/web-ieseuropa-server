@@ -14,23 +14,23 @@ class InstitutionalDocumentController {
     @Autowired lateinit var institutionalDocumentService: InstitutionalDocumentService
 
 
-    @PostMapping("/api/institutional-document")
+    @PostMapping("/api/institutional-document-category/{institutionalDocumentCategoryId}/institutional-document")
     fun postInstitutionalDocument(
             @RequestParam title: String,
             @RequestParam documentFile: MultipartFile,
-            @RequestParam institutionalDocumentCategoryId: Long
+            @PathVariable institutionalDocumentCategoryId: Long
     ): ResponseEntity<InstitutionalDocument> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             institutionalDocumentService.create(documentFile, title, institutionalDocumentCategoryId)
         )
     }
 
-    @PatchMapping("/api/institutional-document/{id}")
+    @PatchMapping("/api/institutional-document-category/{institutionalDocumentCategoryId}/institutional-document/{id}")
     fun pathInstitutionalDocument(
             @PathVariable id: Long,
+            @PathVariable institutionalDocumentCategoryId: Long,
             @RequestParam(required = false) title: String?,
-            @RequestParam(required = false) documentFile: MultipartFile?,
-            @RequestParam(required = false) institutionalDocumentCategoryId: Long?
+            @RequestParam(required = false) documentFile: MultipartFile?
     ): ResponseEntity<InstitutionalDocument> {
         return ResponseEntity.status(HttpStatus.OK).body(
             institutionalDocumentService.update(id, documentFile, title, institutionalDocumentCategoryId)
