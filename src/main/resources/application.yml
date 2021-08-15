@@ -61,7 +61,7 @@ server:
 
 custom:
   username: admin@ieseuropa.es
-  password: silosenovengo
+  password: topsecret
   version: 1.0
   email-enabled: false
   my-secret-token: my-secret-token
