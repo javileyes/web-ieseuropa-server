@@ -16,5 +16,6 @@ class Project(
                 name = "rel_project_document",
                 joinColumns = [JoinColumn(name = "project_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "document_id", referencedColumnName = "id")])
-        var documents: MutableList<Document> = mutableListOf()
+        var documents: MutableList<Document> = mutableListOf(),
+        var location: Int? = null
 )

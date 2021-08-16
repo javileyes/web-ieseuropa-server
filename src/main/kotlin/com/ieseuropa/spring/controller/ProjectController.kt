@@ -19,9 +19,10 @@ class ProjectController {
     fun postProject(
             @RequestParam title: String,
             @RequestParam body: String,
-            @RequestParam bannerFile: MultipartFile
+            @RequestParam bannerFile: MultipartFile,
+            @RequestParam(required = false) location: Int?
     ): ResponseEntity<Project> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.create(title, body, bannerFile))
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.create(title, body, bannerFile, location))
     }
 
     @PatchMapping("/api/project/{id}")
@@ -29,9 +30,10 @@ class ProjectController {
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?,
-            @RequestParam(required = false) bannerFile: MultipartFile?
+            @RequestParam(required = false) bannerFile: MultipartFile?,
+            @RequestParam(required = false) location: Int?
     ): ResponseEntity<Project> {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.update(id, title, body, bannerFile))
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.update(id, title, body, bannerFile, location))
     }
 
     @PostMapping("/api/project/{id}/document")

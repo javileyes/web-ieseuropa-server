@@ -21,22 +21,28 @@ class ProjectService {
 
     fun init() {
         if (projectRepository.count() == 0L) {
-            create("Prueba1", "lorem", mockTool.multipartFileImage())
-            create("Prueba2", "lorem", mockTool.multipartFileImage())
+            create("Prueba1", "lorem", mockTool.multipartFileImage(), null)
+            create("Prueba2", "lorem", mockTool.multipartFileImage(), null)
         }
     }
 
-    fun create(title: String, body: String, bannerFile: MultipartFile): Project {
+    fun create(title: String, body: String, bannerFile: MultipartFile, location: Int?): Project {
         val project = Project(
             title = title,
             body = body,
             banner = documentService.create(bannerFile, Document.Type.IMAGE, Project::class.java.simpleName, null)
         )
 
+        location?.let {
+            project.location = it
+        } ?: run {
+            project.location = 1000
+        }
+
         return projectRepository.save(project)
     }
 
-    fun update(id: Long, title: String?, body: String?, bannerFile: MultipartFile?): Project {
+    fun update(id: Long, title: String?, body: String?, bannerFile: MultipartFile?, location: Int?): Project {
         val project = findById(id)
 
         title?.let {
@@ -46,6 +52,10 @@ class ProjectService {
         body?.let {
             if (it.isBlank()) throw IllegalArgumentException()
             project.body = it
+        }
+
+        location?.let {
+            project.location = it
         }
 
         bannerFile?.let {
@@ -89,6 +99,6 @@ class ProjectService {
     }
 
     fun findAll(): List<Project> {
-        return projectRepository.findAllByOrderByIdDesc()
+        return projectRepository.findByOrderByLocationAsc()
     }
 }

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProjectRepository : JpaRepository<Project, Long> {
 
-    fun findAllByOrderByIdDesc(): List<Project>
+    fun findByOrderByLocationAsc(): List<Project>
 
 }
